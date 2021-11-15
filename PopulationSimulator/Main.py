@@ -1,50 +1,51 @@
 import tkinter as tk
 
 def changeWaterLabel(*args):
-    WaterLabel.config(text='') # clear label
-    WaterLabel.config(text= "Water = " + numOfWaterEntry.get()) # set new label text
+    ST.WaterLabel.config(text='') # clear label
+    ST.WaterLabel.config(text= "Water = " + ST.numOfWaterEntry.get()) # set new label text
 
 def changeFoodLabel(*args):
-    FoodLabel.config(text='') # clear label
-    FoodLabel.config(text= "Food = " + numOfFoodEntry.get()) # set new label text
+    ST.FoodLabel.config(text='') # clear label
+    ST.FoodLabel.config(text= "Food = " + ST.numOfFoodEntry.get()) # set new label text
 
 def changeShelterLabel(*args):
-    ShelterLabel.config(text='') # clear label
-    ShelterLabel.config(text= "Shelter = " + numOfShelterEntry.get()) # set new label text
+    ST.ShelterLabel.config(text='') # clear label
+    ST.ShelterLabel.config(text= "Shelter = " + ST.numOfShelterEntry.get()) # set new label text
 
-#Intalize Tkinter
-root = tk.Tk()
-root.title('Ecosystem Population Simulator')
+def ST():
+
+    #Intalize Tkinter
+    root = tk.Tk()
+    root.title('Ecosystem Population Simulator')
+
+    #make traceable variables
+    ST.WaterVar = tk.StringVar()
+    ST.FoodVar = tk.StringVar()
+    ST.ShelterVar = tk.StringVar()
+
+    #make entry boxes
+    ST.numOfWaterEntry = tk.Entry(root, width=10,textvariable=ST.WaterVar)
+    ST.numOfFoodEntry = tk.Entry(root, width=10,textvariable=ST.FoodVar)
+    ST.numOfShelterEntry = tk.Entry(root, width=10,textvariable=ST.ShelterVar)
+
+    #make changeable labels
+    ST.WaterLabel = tk.Label(root,text="Water = 0")
+    ST.FoodLabel = tk.Label(root,text="Food = 0")
+    ST.ShelterLabel = tk.Label(root,text="Shelter = 0")
+
+    #change label
+    ST.WaterVar.trace('w', changeWaterLabel)
+    ST.FoodVar.trace('w', changeFoodLabel)
+    ST.ShelterVar.trace('w', changeShelterLabel)
     
-WaterVar = tk.StringVar()
-FoodVar = tk.StringVar()
-ShelterVar = tk.StringVar()
+    #place on screen
+    ST.numOfWaterEntry.grid(row=3, column=1)
+    ST.numOfFoodEntry.grid(row=3,column=2)
+    ST.numOfShelterEntry.grid(row=3,column=3)
+    ST.WaterLabel.grid(row=2,column=1)
+    ST.FoodLabel.grid(row=2,column=2)
+    ST.ShelterLabel.grid(row=2,column=3)
 
-numOfWaterEntry = tk.Entry(root, width=10,textvariable=WaterVar)
-numOfFoodEntry = tk.Entry(root, width=10,textvariable=FoodVar)
-numOfShelterEntry = tk.Entry(root, width=10,textvariable=ShelterVar)
+    root.mainloop()
 
-WaterLabel = tk.Label(root,text="Water = 0")
-FoodLabel = tk.Label(root,text="Food = 0")
-ShelterLabel = tk.Label(root,text="Shelter = 0")
-
-WaterVar.trace('w', changeWaterLabel)
-FoodVar.trace('w', changeFoodLabel)
-ShelterVar.trace('w', changeShelterLabel)
-
-
-numOfWaterEntry.grid(row=3, column=1)
-numOfFoodEntry.grid(row=3,column=2)
-numOfShelterEntry.grid(row=3,column=3)
-WaterLabel.grid(row=2,column=1)
-FoodLabel.grid(row=2,column=2)
-ShelterLabel.grid(row=2,column=3)
-
-
-#def activate():
-
-#advanceButton = tk.Button(root,padx=20,pady=20,text="activate", command=activate,).grid(row=4, column=2,)
-
-
-root.mainloop()
-
+ST()
