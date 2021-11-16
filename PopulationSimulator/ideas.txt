@@ -1,0 +1,18 @@
+when activate lock entry boxes until restart
+change year 
+    set needs of animals
+        make array with number of deer given
+        deer[i] = random number between 1 and 3
+    math time
+        check how many of each thing we need 
+            have 5W 5F 5S
+            need 3W 4F 9S
+        then do math 
+            water loses 3
+            food loses 4
+            shelter loses 5 
+            IF ANY NEGATIVE
+                kill that many deer (shelter = -4 so four deer die)
+                then make 4(number of deer that died) new elements 1 to 3
+            then multiply the current number of deer by 2
+RINSE AND REPEAT

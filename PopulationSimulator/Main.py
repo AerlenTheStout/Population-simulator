@@ -18,7 +18,7 @@ def changeYearLabel(*args):
 
 def changeAnimalLabel(*args):
     ST.AnimalLabel.config(text='') # clear label
-    ST.AnimalLabel.config(text= "Animals: " + ST.numOfAnimalsEntry.get()) # set new label text
+    ST.AnimalLabel.config(text= "Animals =  " + ST.numOfAnimalsEntry.get()) # set new label text
 
 def ST():
 
@@ -75,15 +75,24 @@ def ST():
 
     ST.root.mainloop()
 
-def SetAnimals():
-    #create animals
-    global Animals; Animals = []
-    
-
 def activate():
     
+    #disable entry boxes
+    ST.numOfWaterEntry.config(state='disabled')
+    ST.numOfFoodEntry.config(state='disabled')
+    ST.numOfShelterEntry.config(state='disabled')
+    ST.numOfAnimalsEntry.config(state='disabled')
+
+    #change year label
     global year; year += 1
     changeYearLabel()
+
+    #make array for anmimals
+    global Animals; Animals = []
+
+
+
+
 
     #get values from entry boxes
     numOfWater = int(ST.numOfWaterEntry.get())
