@@ -13,8 +13,12 @@ def changeShelterLabel(*args):
     ST.ShelterLabel.config(text= "Shelter = " + ST.numOfShelterEntry.get()) # set new label text
 
 def changeYearLabel(*args):
-    ST.yearLabel.config(text='') # clear label
-    ST.yearLabel.config(text="Year " + str(year)) # set new label text
+    ST.YearLabel.config(text='') # clear label
+    ST.YearLabel.config(text="Year " + str(year)) # set new label text
+
+def changeAnimalLabel(*args):
+    ST.AnimalLabel.config(text='') # clear label
+    ST.AnimalLabel.config(text= "Animals: " + ST.numOfAnimalsEntry.get()) # set new label text
 
 def ST():
 
@@ -26,11 +30,15 @@ def ST():
     ST.WaterVar = tk.StringVar()
     ST.FoodVar = tk.StringVar()
     ST.ShelterVar = tk.StringVar()
-
+    ST.AnimalVar = tk.StringVar()
+    
     #make entry boxes
     ST.numOfWaterEntry = tk.Entry(ST.root, width=10,textvariable=ST.WaterVar)
     ST.numOfFoodEntry = tk.Entry(ST.root, width=10,textvariable=ST.FoodVar)
     ST.numOfShelterEntry = tk.Entry(ST.root, width=10,textvariable=ST.ShelterVar)
+
+    #make animal entry boxes
+    ST.numOfAnimalsEntry = tk.Entry(ST.root, width=10,textvariable=ST.AnimalVar)
 
     #make changeable labels
     ST.WaterLabel = tk.Label(ST.root,text="Water = 0")
@@ -38,30 +46,49 @@ def ST():
     ST.ShelterLabel = tk.Label(ST.root,text="Shelter = 0")
 
     #makes year counter label and variable
-    ST.yearLabel = tk.Label(ST.root, text="")
+    ST.YearLabel = tk.Label(ST.root, text="Year 0")
     global year; year = 0
+
+    #make animal label
+    ST.AnimalLabel = tk.Label(ST.root, text="Animals = ")
 
     #change label
     ST.WaterVar.trace('w', changeWaterLabel)
     ST.FoodVar.trace('w', changeFoodLabel)
     ST.ShelterVar.trace('w', changeShelterLabel)
-    
+    ST.AnimalVar.trace('w', changeAnimalLabel)
+
     #place on screen
     ST.numOfWaterEntry.grid(row=3, column=1)
     ST.numOfFoodEntry.grid(row=3,column=2)
     ST.numOfShelterEntry.grid(row=3,column=3)
+    ST.numOfAnimalsEntry.grid(row=5, column=2)
     ST.WaterLabel.grid(row=2,column=1)
     ST.FoodLabel.grid(row=2,column=2)
     ST.ShelterLabel.grid(row=2,column=3)
-    ST.yearLabel.grid(row=1,column=2)
+    ST.YearLabel.grid(row=1,column=2)
+    ST.AnimalLabel.grid(row=4,column=2)
+    
     ActivateButton = tk.Button(ST.root, padx=10, pady=10,text='Advance', command=activate)
     
-    ActivateButton.grid(row=4,column=2)
+    ActivateButton.grid(row=6,column=2)
 
     ST.root.mainloop()
 
+def SetAnimals():
+    #create animals
+    global Animals; Animals = []
+    
+
 def activate():
+    
     global year; year += 1
     changeYearLabel()
-    
+
+    #get values from entry boxes
+    numOfWater = int(ST.numOfWaterEntry.get())
+    numOfFood = int(ST.numOfFoodEntry.get())
+    numOfShelter = int(ST.numOfShelterEntry.get())
+
 ST()
+
