@@ -16,3 +16,5 @@ change year
                 then make 4(number of deer that died) new elements 1 to 3
             then multiply the current number of deer by 2
 RINSE AND REPEAT
+check water left against water need to see how much 
+it used
