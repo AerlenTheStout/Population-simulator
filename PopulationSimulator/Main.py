@@ -1,4 +1,5 @@
 import tkinter as tk
+import random as rd
 
 def changeWaterLabel(*args):
     ST.WaterLabel.config(text='') # clear label
@@ -89,15 +90,52 @@ def activate():
 
     #make array for anmimals
     global Animals; Animals = []
+    for i in range(int(ST.AnimalVar.get())):
+        Animals.append(rd.randint(1,3))
+    print(Animals)
 
-
-
-
+    #count needs
+    Waterneed = Animals.count(1)
+    print(Waterneed, "waterneed")
+    FoodNeed = Animals.count(2)
+    print(FoodNeed, "foodneed")
+    ShelterNeed = Animals.count(3)
+    print(ShelterNeed, "shelterneed")
 
     #get values from entry boxes
-    numOfWater = int(ST.numOfWaterEntry.get())
-    numOfFood = int(ST.numOfFoodEntry.get())
-    numOfShelter = int(ST.numOfShelterEntry.get())
+    numOfWater = ST.numOfWaterEntry.get()
+    print(numOfWater,"Water")
+    numOfFood = ST.numOfFoodEntry.get()
+    print(numOfFood, "food")
+    numOfShelter = ST.numOfShelterEntry.get()
+    print(numOfShelter, "shelter")
+    #find out difference between needs and animals needs
+    WaterLeft = int(numOfWater) - Waterneed
+    print(WaterLeft, "WaterLeft")
+    FoodLeft = int(numOfFood) - FoodNeed
+    print(FoodLeft, "FoodLeft")
+    ShelterLeft =  int(numOfShelter) - ShelterNeed
+    print(ShelterLeft, "ShelterLeft")
+    
+    #if there is enough water, food, and shelter, then remove animals from array
+    if WaterLeft < 0:
+        for i in range(abs(WaterLeft)):
+            Animals.pop(0)
+            print(Animals)
+    if FoodLeft < 0:
+        for i in range(abs(FoodLeft)):
+            Animals.pop(0)
+            print(Animals)
+    if ShelterLeft < 0:
+        for i in range(abs(ShelterLeft)):
+            Animals.pop(0)
+            print(Animals)
+    #edit config of entry boxes
+    ST.AnimalVar.set(len(Animals))
 
+    
+    #remove used elements
+    #if difference is negative substract from animals
+    
 ST()
 
