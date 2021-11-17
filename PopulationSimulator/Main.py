@@ -103,20 +103,39 @@ def activate():
     print(ShelterNeed, "shelterneed")
 
     #get values from entry boxes
-    numOfWater = ST.numOfWaterEntry.get()
+    numOfWater = int(ST.numOfWaterEntry.get())
     print(numOfWater,"Water")
-    numOfFood = ST.numOfFoodEntry.get()
+    numOfFood = int(ST.numOfFoodEntry.get())
     print(numOfFood, "food")
-    numOfShelter = ST.numOfShelterEntry.get()
+    numOfShelter = int(ST.numOfShelterEntry.get())
     print(numOfShelter, "shelter")
+
     #find out difference between needs and animals needs
-    WaterLeft = int(numOfWater) - Waterneed
+    WaterLeft = numOfWater - Waterneed
     print(WaterLeft, "WaterLeft")
-    FoodLeft = int(numOfFood) - FoodNeed
+    FoodLeft = numOfFood - FoodNeed
     print(FoodLeft, "FoodLeft")
-    ShelterLeft =  int(numOfShelter) - ShelterNeed
+    ShelterLeft =  numOfShelter - ShelterNeed
     print(ShelterLeft, "ShelterLeft")
     
+    #change entry boxes to how many elements are left
+    if WaterLeft < 0:
+        WaterToRemove = 0
+    else:
+        WaterToRemove = WaterLeft
+    if FoodLeft < 0:
+        FoodToRemove = 0
+    else:    
+        FoodToRemove = FoodLeft
+    if ShelterLeft < 0:
+        ShelterToRemove = 0
+    else:
+        ShelterToRemove = ShelterLeft
+    
+    ST.WaterVar.set(WaterToRemove)
+    ST.FoodVar.set(FoodToRemove)
+    ST.ShelterVar.set(ShelterToRemove)
+
     #if there is enough water, food, and shelter, then remove animals from array
     if WaterLeft < 0:
         for i in range(abs(WaterLeft)):
@@ -133,9 +152,11 @@ def activate():
     #edit config of entry boxes
     ST.AnimalVar.set(len(Animals))
 
-    
-    #remove used elements
-    #if difference is negative substract from animals
+
+
+    #Add animals to array
+    AnimalsToAdd = numOfWater - WaterLeft, numOfFood - FoodLeft, numOfShelter - ShelterLeft
+    print(AnimalsToAdd, "AnimalsToAdd")
     
 ST()
 
