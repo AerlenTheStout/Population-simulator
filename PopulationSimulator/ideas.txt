@@ -18,3 +18,14 @@ change year
 RINSE AND REPEAT
 check water left against water need to see how much 
 it used
+
+water - waterleft
+
+29 elememnts
+28
+
+4
+7
+13
+24
+

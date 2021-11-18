@@ -21,6 +21,18 @@ def changeAnimalLabel(*args):
     ST.AnimalLabel.config(text='') # clear label
     ST.AnimalLabel.config(text= "Animals =  " + ST.numOfAnimalsEntry.get()) # set new label text
 
+def changeWaterCapVar(*args):
+    ST.WaterCap.config(text='') # clear label
+    ST.WaterCap.config(text= "Water Cap = " + ST.WaterCapEntry.get()) # set new label text
+
+def changeFoodCapVar(*args):
+    ST.FoodCap.config(text='') # clear label
+    ST.FoodCap.config(text= "Food Cap = " + ST.WaterCapEntry.get()) # set new label text
+
+def changeShelterCapVar(*args):
+    ST.ShelterCap.config(text='') # clear label
+    ST.ShelterCap.config(text= "Shelter Cap = " + ST.ShelterCapEntry.get()) # set new label text
+
 def ST():
 
     #Intalize Tkinter
@@ -28,15 +40,25 @@ def ST():
     ST.root.title('Ecosystem Population Simulator')
 
     #make traceable variables
-    ST.WaterVar = tk.StringVar()
-    ST.FoodVar = tk.StringVar()
-    ST.ShelterVar = tk.StringVar()
-    ST.AnimalVar = tk.StringVar()
-    
+    ST.WaterVar = tk.IntVar()
+    ST.FoodVar = tk.IntVar()
+    ST.ShelterVar = tk.IntVar()
+
+    ST.AnimalVar = tk.IntVar()
+
+    ST.WaterCapVar = tk.IntVar()
+    ST.FoodCapVar = tk.IntVar()
+    ST.ShelterCapVar = tk.IntVar()
+
     #make entry boxes
     ST.numOfWaterEntry = tk.Entry(ST.root, width=10,textvariable=ST.WaterVar)
     ST.numOfFoodEntry = tk.Entry(ST.root, width=10,textvariable=ST.FoodVar)
     ST.numOfShelterEntry = tk.Entry(ST.root, width=10,textvariable=ST.ShelterVar)
+
+    #make element cap entry boxes
+    ST.WaterCapEntry = tk.Entry(ST.root, width=10,textvariable=ST.WaterCapVar)
+    ST.FoodCapEntry = tk.Entry(ST.root, width=10,textvariable=ST.FoodCapVar)
+    ST.ShelterCapEntry = tk.Entry(ST.root, width=10,textvariable=ST.ShelterCapVar)
 
     #make animal entry boxes
     ST.numOfAnimalsEntry = tk.Entry(ST.root, width=10,textvariable=ST.AnimalVar)
@@ -45,6 +67,11 @@ def ST():
     ST.WaterLabel = tk.Label(ST.root,text="Water = 0")
     ST.FoodLabel = tk.Label(ST.root,text="Food = 0")
     ST.ShelterLabel = tk.Label(ST.root,text="Shelter = 0")
+    
+    #make element caps labels
+    ST.WaterCap = tk.Label(ST.root,text="Water Cap = 0")
+    ST.FoodCap = tk.Label(ST.root,text="Food Cap = 0")
+    ST.ShelterCap = tk.Label(ST.root,text="Shelter Cap = 0")
 
     #makes year counter label and variable
     ST.YearLabel = tk.Label(ST.root, text="Year 0")
@@ -57,22 +84,41 @@ def ST():
     ST.WaterVar.trace('w', changeWaterLabel)
     ST.FoodVar.trace('w', changeFoodLabel)
     ST.ShelterVar.trace('w', changeShelterLabel)
+
     ST.AnimalVar.trace('w', changeAnimalLabel)
 
+    ST.WaterCapVar.trace('w', changeWaterCapVar)
+    ST.FoodCapVar.trace('w', changeFoodCapVar)
+    ST.ShelterCapVar.trace('w', changeShelterCapVar)
+    
+
+
     #place on screen
-    ST.numOfWaterEntry.grid(row=3, column=1)
-    ST.numOfFoodEntry.grid(row=3,column=2)
-    ST.numOfShelterEntry.grid(row=3,column=3)
-    ST.numOfAnimalsEntry.grid(row=5, column=2)
-    ST.WaterLabel.grid(row=2,column=1)
-    ST.FoodLabel.grid(row=2,column=2)
-    ST.ShelterLabel.grid(row=2,column=3)
     ST.YearLabel.grid(row=1,column=2)
-    ST.AnimalLabel.grid(row=4,column=2)
     
+    ST.WaterCap.grid(row=2,column=1)
+    ST.FoodCap.grid(row=2,column=2)
+    ST.ShelterCap.grid(row=2,column=3)
+
+    ST.WaterCapEntry.grid(row=3, column=1)
+    ST.FoodCapEntry.grid(row=3,column=2)
+    ST.ShelterCapEntry.grid(row=3,column=3)
+
+    ST.WaterLabel.grid(row=4,column=1)
+    ST.FoodLabel.grid(row=4,column=2)
+    ST.ShelterLabel.grid(row=4,column=3)
+
+    ST.numOfWaterEntry.grid(row=5, column=1)
+    ST.numOfFoodEntry.grid(row=5,column=2)
+    ST.numOfShelterEntry.grid(row=5,column=3)
+
+    ST.AnimalLabel.grid(row=6,column=2)
+
+    ST.numOfAnimalsEntry.grid(row=7, column=2)
+
+    #activate button
     ActivateButton = tk.Button(ST.root, padx=10, pady=10,text='Advance', command=activate)
-    
-    ActivateButton.grid(row=6,column=2)
+    ActivateButton.grid(row=8,column=2)
 
     ST.root.mainloop()
 
@@ -93,6 +139,7 @@ def activate():
     for i in range(int(ST.AnimalVar.get())):
         Animals.append(rd.randint(1,3))
     print(Animals)
+    print(len(Animals))
 
     #count needs
     Waterneed = Animals.count(1)
@@ -136,7 +183,28 @@ def activate():
     ST.FoodVar.set(FoodToRemove)
     ST.ShelterVar.set(ShelterToRemove)
 
-    #if there is enough water, food, and shelter, then remove animals from array
+    #add resources
+    for i in range(len(Animals)):
+        RandNum = rd.randint(1,3)
+        if RandNum == 1:
+            ST.WaterVar.set(ST.WaterVar.get() + 1)
+        if RandNum == 2:
+            ST.FoodVar.set(ST.FoodVar.get() + 1)
+        if RandNum == 3:
+            ST.ShelterVar.set(ST.ShelterVar.get() + 1)
+    print(ST.WaterVar.get(), "newWater")
+    print(ST.FoodVar.get(), "newFood")
+    print(ST.ShelterVar.get(), "Shelter")
+    
+    #limit elements to cap
+    if ST.FoodVar.get() > ST.FoodCapVar.get():
+        ST.FoodVar.set(ST.FoodCapVar.get())
+    if ST.WaterVar.get() > ST.WaterCapVar.get():
+        ST.WaterVar.set(ST.WaterCapVar.get())
+    if ST.ShelterVar.get() > ST.ShelterCapVar.get():
+        ST.ShelterVar.set(ST.ShelterCapVar.get())
+
+    #if there is not enough water, food, and shelter, then remove animals from array
     if WaterLeft < 0:
         for i in range(abs(WaterLeft)):
             Animals.pop(0)
@@ -150,13 +218,27 @@ def activate():
             Animals.pop(0)
             print(Animals)
     #edit config of entry boxes
-    ST.AnimalVar.set(len(Animals))
-
-
+    #ST.AnimalVar.set(len(Animals))
+    
 
     #Add animals to array
-    AnimalsToAdd = numOfWater - WaterLeft, numOfFood - FoodLeft, numOfShelter - ShelterLeft
+    
+    if WaterToRemove <= 0:
+        AnimalsToAdd = numOfWater
+    else:
+        AnimalsToAdd = numOfWater - WaterToRemove
+    if FoodToRemove <= 0:
+        AnimalsToAdd += numOfFood
+    else:
+        AnimalsToAdd += numOfFood - FoodToRemove
+    if ShelterToRemove <= 0:
+        AnimalsToAdd += numOfShelter
+    else:
+        AnimalsToAdd += numOfShelter - ShelterToRemove
     print(AnimalsToAdd, "AnimalsToAdd")
+    ST.AnimalVar.set(AnimalsToAdd + len(Animals))
+    print(AnimalsToAdd + len(Animals), "Animals")
+    
     
 ST()
 
