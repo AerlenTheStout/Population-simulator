@@ -33,10 +33,13 @@ water - waterleft
 
 
 no deer die
+8
+10
+12
 
-5 water
-3 food
-2 shelter
-plus nothing
+4+3 = 7 deer die
+0 water extra
+0 food extra
+7 shelter extra
 
-
+problems with add animals

@@ -197,15 +197,15 @@ def activate():
     numOfShelter = int(ST.numOfShelterEntry.get())
 
     #add resources
-    
     for i in range(StartAnimalFinsh - len(Animals)):
         RandNum = rd.randint(1,3)
+        print(RandNum)
         if RandNum == 1:
-            ST.WaterVar.set(+ 1)
-        if RandNum == 2:
-            ST.FoodVar.set(+ 1)
-        if RandNum == 3:
-            ST.ShelterVar.set(+ 1)
+            ST.WaterVar.set(ST.WaterVar.get() + 1)
+        elif RandNum == 2:
+            ST.FoodVar.set(ST.FoodVar.get() + 1)
+        elif RandNum == 3:
+            ST.ShelterVar.set(ST.ShelterVar.get() + 1)
     
     #limit elements to cap
     if ST.FoodVar.get() > ST.FoodCapVar.get():
@@ -216,20 +216,8 @@ def activate():
         ST.ShelterVar.set(ST.ShelterCapVar.get())
 
     #Add animals to array
-    if WaterRemaining <= 0:
-        AnimalsToAdd = numOfWater
-    else:
-        AnimalsToAdd = numOfWater - WaterRemaining
-    if FoodRemaining <= 0:
-        AnimalsToAdd += numOfFood
-    else:
-        AnimalsToAdd += numOfFood - FoodRemaining
-    if ShelterRemaining <= 0:
-        AnimalsToAdd += numOfShelter
-    else:
-        AnimalsToAdd += numOfShelter - ShelterRemaining
     
-    ST.AnimalVar.set(AnimalsToAdd + len(Animals))
+    ST.AnimalVar.set(len(Animals) * 2)
     
     
     
