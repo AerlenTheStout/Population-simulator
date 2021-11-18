@@ -128,6 +128,9 @@ def activate():
     ST.numOfWaterEntry.config(state='disabled')
     ST.numOfFoodEntry.config(state='disabled')
     ST.numOfShelterEntry.config(state='disabled')
+    ST.WaterCapEntry.config(state='disabled')
+    ST.FoodCapEntry.config(state='disabled')
+    ST.ShelterCapEntry.config(state='disabled')
     ST.numOfAnimalsEntry.config(state='disabled')
 
     #change year label
@@ -138,63 +141,71 @@ def activate():
     global Animals; Animals = []
     for i in range(int(ST.AnimalVar.get())):
         Animals.append(rd.randint(1,3))
-    print(Animals)
-    print(len(Animals))
+    StartAnimalFinsh = len(Animals)
 
     #count needs
     Waterneed = Animals.count(1)
-    print(Waterneed, "waterneed")
     FoodNeed = Animals.count(2)
-    print(FoodNeed, "foodneed")
     ShelterNeed = Animals.count(3)
-    print(ShelterNeed, "shelterneed")
 
     #get values from entry boxes
     numOfWater = int(ST.numOfWaterEntry.get())
-    print(numOfWater,"Water")
     numOfFood = int(ST.numOfFoodEntry.get())
-    print(numOfFood, "food")
     numOfShelter = int(ST.numOfShelterEntry.get())
-    print(numOfShelter, "shelter")
 
     #find out difference between needs and animals needs
     WaterLeft = numOfWater - Waterneed
-    print(WaterLeft, "WaterLeft")
     FoodLeft = numOfFood - FoodNeed
-    print(FoodLeft, "FoodLeft")
     ShelterLeft =  numOfShelter - ShelterNeed
-    print(ShelterLeft, "ShelterLeft")
+
+    #if there is not enough water, food, and shelter, then remove animals from array
+    if WaterLeft < 0:
+        for i in range(abs(WaterLeft)):
+            Animals.pop(0)
+            
+    if FoodLeft < 0:
+        for i in range(abs(FoodLeft)):
+            Animals.pop(0)
+            
+    if ShelterLeft < 0:
+        for i in range(abs(ShelterLeft)):
+            Animals.pop(0)
+            
     
+
     #change entry boxes to how many elements are left
     if WaterLeft < 0:
-        WaterToRemove = 0
+        WaterRemaining = 0
     else:
-        WaterToRemove = WaterLeft
+        WaterRemaining = WaterLeft
     if FoodLeft < 0:
-        FoodToRemove = 0
+        FoodRemaining = 0
     else:    
-        FoodToRemove = FoodLeft
+        FoodRemaining = FoodLeft
     if ShelterLeft < 0:
-        ShelterToRemove = 0
+        ShelterRemaining = 0
     else:
-        ShelterToRemove = ShelterLeft
+        ShelterRemaining = ShelterLeft
     
-    ST.WaterVar.set(WaterToRemove)
-    ST.FoodVar.set(FoodToRemove)
-    ST.ShelterVar.set(ShelterToRemove)
+    ST.WaterVar.set(WaterRemaining)
+    ST.FoodVar.set(FoodRemaining)
+    ST.ShelterVar.set(ShelterRemaining)
+
+    #get values from entry boxes
+    numOfWater = int(ST.numOfWaterEntry.get())
+    numOfFood = int(ST.numOfFoodEntry.get())
+    numOfShelter = int(ST.numOfShelterEntry.get())
 
     #add resources
-    for i in range(len(Animals)):
+    
+    for i in range(StartAnimalFinsh - len(Animals)):
         RandNum = rd.randint(1,3)
         if RandNum == 1:
-            ST.WaterVar.set(ST.WaterVar.get() + 1)
+            ST.WaterVar.set(+ 1)
         if RandNum == 2:
-            ST.FoodVar.set(ST.FoodVar.get() + 1)
+            ST.FoodVar.set(+ 1)
         if RandNum == 3:
-            ST.ShelterVar.set(ST.ShelterVar.get() + 1)
-    print(ST.WaterVar.get(), "newWater")
-    print(ST.FoodVar.get(), "newFood")
-    print(ST.ShelterVar.get(), "Shelter")
+            ST.ShelterVar.set(+ 1)
     
     #limit elements to cap
     if ST.FoodVar.get() > ST.FoodCapVar.get():
@@ -204,40 +215,22 @@ def activate():
     if ST.ShelterVar.get() > ST.ShelterCapVar.get():
         ST.ShelterVar.set(ST.ShelterCapVar.get())
 
-    #if there is not enough water, food, and shelter, then remove animals from array
-    if WaterLeft < 0:
-        for i in range(abs(WaterLeft)):
-            Animals.pop(0)
-            print(Animals)
-    if FoodLeft < 0:
-        for i in range(abs(FoodLeft)):
-            Animals.pop(0)
-            print(Animals)
-    if ShelterLeft < 0:
-        for i in range(abs(ShelterLeft)):
-            Animals.pop(0)
-            print(Animals)
-    #edit config of entry boxes
-    #ST.AnimalVar.set(len(Animals))
-    
-
     #Add animals to array
-    
-    if WaterToRemove <= 0:
+    if WaterRemaining <= 0:
         AnimalsToAdd = numOfWater
     else:
-        AnimalsToAdd = numOfWater - WaterToRemove
-    if FoodToRemove <= 0:
+        AnimalsToAdd = numOfWater - WaterRemaining
+    if FoodRemaining <= 0:
         AnimalsToAdd += numOfFood
     else:
-        AnimalsToAdd += numOfFood - FoodToRemove
-    if ShelterToRemove <= 0:
+        AnimalsToAdd += numOfFood - FoodRemaining
+    if ShelterRemaining <= 0:
         AnimalsToAdd += numOfShelter
     else:
-        AnimalsToAdd += numOfShelter - ShelterToRemove
-    print(AnimalsToAdd, "AnimalsToAdd")
+        AnimalsToAdd += numOfShelter - ShelterRemaining
+    
     ST.AnimalVar.set(AnimalsToAdd + len(Animals))
-    print(AnimalsToAdd + len(Animals), "Animals")
+    
     
     
 ST()

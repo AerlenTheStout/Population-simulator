@@ -29,3 +29,14 @@ water - waterleft
 13
 24
 
+
+
+
+no deer die
+
+5 water
+3 food
+2 shelter
+plus nothing
+
+
