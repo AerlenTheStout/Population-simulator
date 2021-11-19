@@ -33,6 +33,10 @@ def changeShelterCapVar(*args):
     ST.ShelterCap.config(text='') # clear label
     ST.ShelterCap.config(text= "Shelter Cap = " + ST.ShelterCapEntry.get()) # set new label text
 
+def changePredatorLabel(*args):
+    ST.PredatorLabel.config(text='') # clear label
+    ST.PredatorLabel.config(text= "Predators = " + ST.numOfPredatorEntry.get()) # set new label text
+
 def ST():
 
     #Intalize Tkinter
@@ -45,7 +49,7 @@ def ST():
     ST.ShelterVar = tk.IntVar()
 
     ST.AnimalVar = tk.IntVar()
-
+    ST.PredatorVar = tk.IntVar()
     ST.WaterCapVar = tk.IntVar()
     ST.FoodCapVar = tk.IntVar()
     ST.ShelterCapVar = tk.IntVar()
@@ -62,7 +66,8 @@ def ST():
 
     #make animal entry boxes
     ST.numOfAnimalsEntry = tk.Entry(ST.root, width=10,textvariable=ST.AnimalVar)
-
+    ST.numOfPredatorEntry = tk.Entry(ST.root, width=10,textvariable=ST.PredatorVar)
+    
     #make changeable labels
     ST.WaterLabel = tk.Label(ST.root,text="Water = 0")
     ST.FoodLabel = tk.Label(ST.root,text="Food = 0")
@@ -79,6 +84,7 @@ def ST():
 
     #make animal label
     ST.AnimalLabel = tk.Label(ST.root, text="Animals = ")
+    ST.PredatorLabel = tk.Label(ST.root, text="Predator = ")
 
     #change label
     ST.WaterVar.trace('w', changeWaterLabel)
@@ -86,6 +92,7 @@ def ST():
     ST.ShelterVar.trace('w', changeShelterLabel)
 
     ST.AnimalVar.trace('w', changeAnimalLabel)
+    ST.PredatorVar.trace('w', changePredatorLabel)
 
     ST.WaterCapVar.trace('w', changeWaterCapVar)
     ST.FoodCapVar.trace('w', changeFoodCapVar)
@@ -112,10 +119,12 @@ def ST():
     ST.numOfFoodEntry.grid(row=5,column=2)
     ST.numOfShelterEntry.grid(row=5,column=3)
 
-    ST.AnimalLabel.grid(row=6,column=2)
+    ST.AnimalLabel.grid(row=6,column=1)
+    ST.PredatorLabel.grid(row=6,column=3)
 
-    ST.numOfAnimalsEntry.grid(row=7, column=2)
-
+    ST.numOfAnimalsEntry.grid(row=7, column=1)
+    ST.numOfPredatorEntry.grid(row=7,column=3)
+    
     #activate button
     ActivateButton = tk.Button(ST.root, padx=10, pady=10,text='Advance', command=activate)
     ActivateButton.grid(row=8,column=2)
@@ -199,7 +208,6 @@ def activate():
     #add resources
     for i in range(StartAnimalFinsh - len(Animals)):
         RandNum = rd.randint(1,3)
-        print(RandNum)
         if RandNum == 1:
             ST.WaterVar.set(ST.WaterVar.get() + 1)
         elif RandNum == 2:
@@ -218,8 +226,6 @@ def activate():
     #Add animals to array
     
     ST.AnimalVar.set(len(Animals) * 2)
-    
-    
-    
+       
 ST()
 
