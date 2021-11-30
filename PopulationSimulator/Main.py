@@ -218,8 +218,5 @@ def activate():
     #Add animals to array
     
     ST.AnimalVar.set(len(Animals) * 2)
-    
-    
-    
+      
 ST()
-
